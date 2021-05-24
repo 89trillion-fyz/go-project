@@ -1,6 +1,7 @@
 package router
 
 import (
+	"demo1/middleware"
 	"github.com/gin-gonic/gin"
 )
 
@@ -12,6 +13,7 @@ func Routers() *gin.Engine {
 	//Router.Use(middleware.Cors()) // 如需跨域可以打开
 	// 方便统一添加路由组前缀 多服务器上线使用
 	PublicGroup := Router.Group("")
+	PublicGroup.Use(middleware.GlobalDataHandler())
 	{
 		InitArmyRouter(PublicGroup) // 自动初始化相关
 	}
