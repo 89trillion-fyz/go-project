@@ -21,7 +21,11 @@ func wordSepNormalizeFunc(f *flag.FlagSet, name string) flag.NormalizedName {
 func loadConfig(filename string) {
 	data, err := io.ReadFile(filename) //read config file
 	if err != nil {
-		fmt.Println("read json file error")
+		fmt.Println("read json file error filename", filename)
+		data, err = io.ReadFile("../" + filename) //read config file
+		if err != nil {
+			fmt.Println("read json file error filename", "../"+filename)
+		}
 	}
 	datajson := []byte(data)
 	err = json.Unmarshal(datajson, &global.G_JSONDATA)
@@ -39,6 +43,10 @@ func InitData() {
 	err := ini.MapTo(&global.G_CONFIG, "app.ini")
 	if err != nil {
 		fmt.Println("Failed to parse config file: %s", err)
+		err = ini.MapTo(&global.G_CONFIG, "../app.ini")
+		if err != nil {
+			fmt.Println("Failed to parse config file retry ...: %s", err)
+		}
 	}
 	// 设置标准化参数名称的函数
 	fmt.Println("globalConfig", global.G_CONFIG)

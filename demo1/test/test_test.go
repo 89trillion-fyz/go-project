@@ -1,6 +1,7 @@
 package test
 
 import (
+	"demo1/global"
 	"demo1/router"
 	response "demo1/utils"
 	"encoding/json"
@@ -12,7 +13,7 @@ import (
 )
 
 func init() {
-
+	global.G_JSONPATH = "../config.army.model.json"
 }
 
 // Get 根据特定请求uri，发起get请求返回响应
