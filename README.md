@@ -10,3 +10,7 @@ Accept: application/json
 ####3）输入士兵id获取战力
 GET http://localhost:8000/army/findQualityById?id=10101
 Accept: application/json
+
+####4）获取每个阶段解锁相应士兵的json数据
+GET http://localhost:8000/army/findByLock?lock=1
+Accept: application/json
