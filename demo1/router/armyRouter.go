@@ -17,7 +17,7 @@ func InitArmyRouter(Router *gin.RouterGroup) {
 		//4）输入cvc获取所有合法的士兵
 		//ArmyRouter.GET("findByCvc")
 		//5）获取每个阶段解锁相应士兵的json数据
-		//ArmyRouter.GET("findQualityById")
+		ArmyRouter.GET("findByLock", api.FindByLock)
 	}
 
 }

@@ -1,7 +1,6 @@
 package test
 
 import (
-	"demo1/global"
 	"demo1/router"
 	response "demo1/utils"
 	"encoding/json"
@@ -11,10 +10,6 @@ import (
 	"net/http/httptest"
 	"testing"
 )
-
-func init() {
-	global.G_JSONPATH = "../config.army.model.json"
-}
 
 // Get 根据特定请求uri，发起get请求返回响应
 func Get(uri string, router *gin.Engine) []byte {
@@ -58,6 +53,15 @@ func TestArmyFindRarityById(t *testing.T) {
 func TestFindQualityById(t *testing.T) {
 	Router := router.Routers()
 	body := Get("/army/findQualityById?id=10101", Router)
+	fmt.Printf("response:%v\n", string(body))
+	response := &response.Response{}
+	if err := json.Unmarshal(body, response); err != nil {
+		t.Errorf("解析响应出错，err:%v\n", err)
+	}
+}
+func TestFindByLock(t *testing.T) {
+	Router := router.Routers()
+	body := Get("/army/findByLock?lock=1", Router)
 	fmt.Printf("response:%v\n", string(body))
 	response := &response.Response{}
 	if err := json.Unmarshal(body, response); err != nil {

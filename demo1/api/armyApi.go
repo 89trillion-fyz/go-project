@@ -49,3 +49,16 @@ func FindQualityById(c *gin.Context) {
 	}
 	response.Result(response.SUCCESS, quality, "ok", c)
 }
+
+func FindByLock(c *gin.Context) {
+	lock := c.Query("lock")
+	fmt.Println("lock", lock)
+	jsondata := global.G_JSONDATA
+	armyArr := []model.Army{}
+	for _, army := range jsondata {
+		if army.UnlockArena == lock {
+			armyArr = append(armyArr, army)
+		}
+	}
+	response.Result(response.SUCCESS, armyArr, "ok", c)
+}
