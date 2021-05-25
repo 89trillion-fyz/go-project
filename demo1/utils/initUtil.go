@@ -32,7 +32,6 @@ func loadConfig(filename string) {
 	if err != nil {
 		fmt.Println("unmarshal json file error")
 	}
-	fmt.Println("global.G_JSONDATA", global.G_JSONDATA)
 }
 func InitData() {
 	flag.StringVar(&global.G_JSONPATH, "jsonPath", "config.army.model.json", "Input Your Json Path")
@@ -48,8 +47,6 @@ func InitData() {
 			fmt.Println("Failed to parse config file retry ...: %s", err)
 		}
 	}
-	// 设置标准化参数名称的函数
-	fmt.Println("globalConfig", global.G_CONFIG)
 	//加载json数据
 	loadConfig(global.G_JSONPATH)
 }
