@@ -11,6 +11,11 @@ import (
 	"testing"
 )
 
+func TestMain(m *testing.M) {
+	fmt.Println("统一初始化...")
+	m.Run()
+}
+
 // Get 根据特定请求uri，发起get请求返回响应
 func Get(uri string, router *gin.Engine) []byte {
 	// 构造get请求
