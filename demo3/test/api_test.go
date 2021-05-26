@@ -69,12 +69,12 @@ func TestCreateCdkey3(t *testing.T) {
 }
 func TestGetCdkeyDetails(t *testing.T) {
 	Router := router.Routers()
-	result := Get("/cdkey/getCdkeyDetails?cdkey=JL9P9F4P", Router)
+	result := Get("/cdkey/getCdkeyDetails?cdkey=QEFI1VG8", Router)
 	fmt.Println("result =", string(result))
 }
 func TestVerifyCdkey(t *testing.T) {
 	Router := router.Routers()
-	result := Get("/cdkey/verifyCdkey?cdkey=JL9P9F4P&user=admin", Router)
+	result := Get("/cdkey/verifyCdkey?cdkey=QEFI1VG8&user=admin", Router)
 	fmt.Println("result =", string(result))
 }
 func TestVerifyCdkey2(t *testing.T) {
