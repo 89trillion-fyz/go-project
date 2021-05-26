@@ -111,13 +111,9 @@ func VerifyCdkey(c *gin.Context) {
 		return
 	}
 	fmt.Println("VerifyCdkey cdkeymodel", cdkeyModel)
-	//校验礼包码是否在有效期内
-	if time.Time(cdkeyModel.ExpireTime).Before(time.Now()) || cdkeyModel.TotalExchangeNum-cdkeyModel.AlreadyExchangeNum == 0 {
-		utils.FailWithMessage("礼包码已经失效", c)
-		return
-	}
 	//执行兑换流程
 	strategyObj := strategy.NewStrategyContext(cdkeyModel.CdkeyType, strategy.ExchangeDetails{User: user, ExchangeTime: model.LocalTime(time.Now())})
+	fmt.Printf("strategyObj ==is of type %T \n", strategyObj.ExchangeStrategy)
 	if err := strategyObj.ExchangeStrategy.Exchange(&cdkeyModel); err != nil {
 		utils.FailWithMessage(err.Error(), c)
 		return

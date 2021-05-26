@@ -53,6 +53,20 @@ func TestCreateCdkey(t *testing.T) {
 	result := Post("/cdkey/createCdkey", "{\"cdkeyType\":1,\"cdkeyUser\":\"admin\",\"createTime\":\"2021-05-26 15:00:00\",\"creator\":\"admin\",\"desc\":\"兑换吗\",\"contents\":[{\"item\":\"金币\",\"count\":\"10\"},{\"item\":\"钻石\",\"count\":\"20\"}],\"expireTime\":\"2021-05-26 19:00:00\",\"totalExchangeNum\":10}", Router)
 	fmt.Println("result =", string(result))
 }
+
+//创建多次兑换
+func TestCreateCdkey2(t *testing.T) {
+	Router := router.Routers()
+	result := Post("/cdkey/createCdkey", "{\"cdkeyType\":2,\"cdkeyUser\":\"admin\",\"createTime\":\"2021-05-26 15:00:00\",\"creator\":\"admin\",\"desc\":\"兑换吗\",\"contents\":[{\"item\":\"金币\",\"count\":\"10\"},{\"item\":\"钻石\",\"count\":\"20\"}],\"expireTime\":\"2021-05-26 19:00:00\",\"totalExchangeNum\":3}", Router)
+	fmt.Println("result =", string(result))
+}
+
+//创建无限次兑换
+func TestCreateCdkey3(t *testing.T) {
+	Router := router.Routers()
+	result := Post("/cdkey/createCdkey", "{\"cdkeyType\":3,\"cdkeyUser\":\"admin\",\"createTime\":\"2021-05-26 15:00:00\",\"creator\":\"admin\",\"desc\":\"兑换吗\",\"contents\":[{\"item\":\"金币\",\"count\":\"10\"},{\"item\":\"钻石\",\"count\":\"20\"}],\"expireTime\":\"2021-05-26 19:00:00\",\"totalExchangeNum\":3}", Router)
+	fmt.Println("result =", string(result))
+}
 func TestGetCdkeyDetails(t *testing.T) {
 	Router := router.Routers()
 	result := Get("/cdkey/getCdkeyDetails?cdkey=JL9P9F4P", Router)
@@ -62,4 +76,18 @@ func TestVerifyCdkey(t *testing.T) {
 	Router := router.Routers()
 	result := Get("/cdkey/verifyCdkey?cdkey=JL9P9F4P&user=admin", Router)
 	fmt.Println("result =", string(result))
+}
+func TestVerifyCdkey2(t *testing.T) {
+	Router := router.Routers()
+	result := Get("/cdkey/verifyCdkey?cdkey=8U7NZ6LC", Router)
+	fmt.Println("result =", string(result))
+}
+func TestVerifyCdkey3(t *testing.T) {
+	Router := router.Routers()
+	result := Get("/cdkey/verifyCdkey?cdkey=A8HQN2J0", Router)
+	for i := 0; i < 10; i++ {
+		result = Get("/cdkey/verifyCdkey?cdkey=A8HQN2J0", Router)
+		fmt.Println("result =", string(result))
+	}
+
 }
