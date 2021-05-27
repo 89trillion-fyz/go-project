@@ -6,10 +6,14 @@ import (
 	"go-project/demo3/core/strategy"
 	"go-project/demo3/global"
 	"go-project/demo3/model"
+	protoModel "go-project/demo3/proto"
 	"go-project/demo3/utils"
 	"math/rand"
+	"net/http"
 	"regexp"
 	"time"
+
+	"google.golang.org/protobuf/proto"
 
 	"github.com/gin-gonic/gin"
 )
@@ -93,30 +97,49 @@ func GetCdkeyDetails(c *gin.Context) {
 
 func VerifyCdkey(c *gin.Context) {
 	cdkey := c.Query("cdkey")
-	user := c.Query("user")
+	userId := c.Query("userId")
 
 	//校验cdkey是否合法
 	match, err := regexp.MatchString("^[A-Z0-9]{8}$", cdkey)
 	if err != nil {
-		utils.FailWithMessage(err.Error(), c)
+		c.ProtoBuf(http.StatusOK, &protoModel.GeneralReward{Code: utils.ERROR, Msg: err.Error()})
 		return
 	}
 	if !match {
-		utils.FailWithMessage("礼品码格式错误", c)
+		c.ProtoBuf(http.StatusOK, &protoModel.GeneralReward{Code: utils.ERROR, Msg: "礼品码格式错误"})
 		return
 	}
 	cdkeyModel := GetCdkModel(c, cdkey)
 	if cdkeyModel.IsEmpty() {
-		utils.FailWithMessage("礼包码不存在", c)
+		c.ProtoBuf(http.StatusOK, &protoModel.GeneralReward{Code: utils.ERROR, Msg: "礼包码不存在"})
 		return
 	}
 	fmt.Println("VerifyCdkey cdkeymodel", cdkeyModel)
 	//执行兑换流程
-	strategyObj := strategy.NewStrategyContext(cdkeyModel.CdkeyType, strategy.ExchangeDetails{User: user, ExchangeTime: model.LocalTime(time.Now())})
+	strategyObj := strategy.NewStrategyContext(cdkeyModel.CdkeyType, strategy.ExchangeDetails{User: userId, ExchangeTime: model.LocalTime(time.Now())})
 	fmt.Printf("strategyObj ==is of type %T \n", strategyObj.ExchangeStrategy)
-	if err := strategyObj.ExchangeStrategy.Exchange(&cdkeyModel); err != nil {
-		utils.FailWithMessage(err.Error(), c)
+	var user model.User
+	if user, err = strategyObj.ExchangeStrategy.Exchange(&cdkeyModel); err != nil {
+		//TODO 异常问题
+		c.ProtoBuf(http.StatusOK, &protoModel.GeneralReward{Code: utils.ERROR, Msg: err.Error()})
 		return
 	}
-	utils.Result(utils.SUCCESS, cdkeyModel, "ok", c)
+	changeMap := make(map[uint32]uint64)
+	for _, content := range cdkeyModel.Contents {
+		changeMap[uint32(content.ContentType)] = content.Count
+	}
+	pb := &protoModel.GeneralReward{
+		Code:    utils.SUCCESS,
+		Msg:     "ok",
+		Changes: changeMap,
+		Balance: user.ContentMap,
+		Counter: nil,
+		Ext:     "",
+	}
+	byteSlice, err := proto.Marshal(pb)
+	if err != nil {
+		utils.FailWithMessage(err.Error(), c)
+	}
+	fmt.Println("before rsp ", cdkeyModel, "byteSlice", byteSlice)
+	c.ProtoBuf(http.StatusOK, pb)
 }

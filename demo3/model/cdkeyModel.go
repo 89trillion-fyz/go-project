@@ -4,7 +4,8 @@ import (
 	"reflect"
 )
 
-type CDKEY_TYPE int
+type CDKEY_TYPE uint32
+type CONTENT_TYPE uint32
 
 const (
 	ONCE   CDKEY_TYPE = iota + 1 //制定用户一次性消耗
@@ -12,10 +13,14 @@ const (
 	ALWAYS                       //不限用户不限次数兑换
 
 )
+const (
+	GLOD CONTENT_TYPE = iota + 1 //金币
+	DIAMOND
+)
 
 type Content struct {
-	Item  string `json:"item" binding:"required"`  //物品
-	Count string `json:"count" binding:"required"` //数量
+	ContentType CONTENT_TYPE `json:"content_type" binding:"required"` //物品类型
+	Count       uint64       `json:"count" binding:"required"`        //数量
 }
 type Exchanger struct {
 	User         string    `json:"user" binding:"required"`
