@@ -88,7 +88,8 @@ func TestVerifyCdkey(t *testing.T) {
 }
 func TestVerifyCdkey2(t *testing.T) {
 	Router := router.Routers()
-	result := Get("/cdkey/verifyCdkey?cdkey=VQ0DND3I&userId=431d6f79-9c8e-4f2e-84c5-431d3b315709", Router)
+	result := Get("/cdkey/verifyCdkey?cdkey=VQ0DND3I&userId=08d4847c-42b7-46c5-b8b7-4333ad3cb410", Router)
+	fmt.Println(result)
 	g := model.GeneralReward{}
 	err := proto.Unmarshal(result, &g)
 	if err != nil {
@@ -111,12 +112,12 @@ func TestVerifyCdkey3(t *testing.T) {
 
 func TestRegester(t *testing.T) {
 	Router := router.Routers()
-	result := Post("/user/registerUser", "{ \"id\":\"asdas\"}", Router)
+	result := Post("/user/registerUser", "{ \"id\":\"\"}", Router)
 	fmt.Println("result =", string(result))
 }
 
 func TestLogin(t *testing.T) {
 	Router := router.Routers()
-	result := Post("/user/login", "{ \"id\":\"492be816-8ebc-46eb-8625-c297258eb19b\"}", Router)
+	result := Post("/user/login", "{ \"id\":\"08d4847c-42b7-46c5-b8b7-4333ad3cb410\"}", Router)
 	fmt.Println("result =", string(result))
 }
