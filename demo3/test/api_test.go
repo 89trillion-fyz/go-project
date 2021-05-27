@@ -78,6 +78,7 @@ func TestGetCdkeyDetails(t *testing.T) {
 func TestVerifyCdkey(t *testing.T) {
 	Router := router.Routers()
 	result := Get("/cdkey/verifyCdkey?cdkey=VQ0DND1I&userId=admin", Router)
+	fmt.Println("result ===", result)
 	g := model.GeneralReward{}
 	err := proto.Unmarshal(result, &g)
 	if err != nil {

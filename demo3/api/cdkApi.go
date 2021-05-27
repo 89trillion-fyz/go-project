@@ -70,19 +70,17 @@ func CreateCdkey(c *gin.Context) {
 	fmt.Println("set str ", str)
 	utils.Result(utils.SUCCESS, cdkey, "ok", c)
 }
-func GetCdkModel(c *gin.Context, cdkey string) model.CdkeyModel {
+func GetCdkModel(cdkey string) (model.CdkeyModel, error) {
 	var cdkeyModel model.CdkeyModel
 	cdkeyModelStr, err := global.GB_REDIS.Get(cdkey).Result()
 	if err != nil {
-		utils.FailWithMessage(err.Error(), c)
-		return cdkeyModel
+		return cdkeyModel, err
 	}
 	if err := json.Unmarshal([]byte(cdkeyModelStr), &cdkeyModel); err != nil {
-		utils.FailWithMessage(err.Error(), c)
-		return cdkeyModel
+		return cdkeyModel, err
 	}
 	fmt.Println("cdkeyModelStr", cdkeyModelStr, "cdkeyModel", cdkeyModel)
-	return cdkeyModel
+	return cdkeyModel, nil
 }
 func GetCdkeyDetails(c *gin.Context) {
 	cdkey := c.Query("cdkey")
@@ -90,7 +88,11 @@ func GetCdkeyDetails(c *gin.Context) {
 		utils.FailWithMessage(err.Error(), c)
 		return
 	}
-	cdkeyModel := GetCdkModel(c, cdkey)
+	cdkeyModel, err := GetCdkModel(cdkey)
+	if err != nil {
+		utils.FailWithMessage(err.Error(), c)
+		return
+	}
 	utils.Result(utils.SUCCESS, cdkeyModel, "ok", c)
 
 }
@@ -109,7 +111,7 @@ func VerifyCdkey(c *gin.Context) {
 		c.ProtoBuf(http.StatusOK, &protoModel.GeneralReward{Code: utils.ERROR, Msg: "礼品码格式错误"})
 		return
 	}
-	cdkeyModel := GetCdkModel(c, cdkey)
+	cdkeyModel, err := GetCdkModel(cdkey)
 	if cdkeyModel.IsEmpty() {
 		c.ProtoBuf(http.StatusOK, &protoModel.GeneralReward{Code: utils.ERROR, Msg: "礼包码不存在"})
 		return
