@@ -3,14 +3,11 @@ package strategy
 import (
 	"encoding/json"
 	"errors"
-	"fmt"
-	"go-project/demo3/handler"
 	"time"
 
 	"go-project/demo3/global"
+	"go-project/demo3/handler"
 	"go-project/demo3/model"
-
-	"go.mongodb.org/mongo-driver/bson"
 )
 
 //兑换策略
@@ -67,16 +64,12 @@ func NewAlwaysStrategy(details ExchangeDetails) AlwaysStrategy {
 	return *instance
 }
 func commonExchange(cdkeyModel *model.CdkeyModel, details *ExchangeDetails) (model.User, error) {
-	fmt.Println("commonExchange details", details.User)
-	filter := bson.D{{"id", details.User}}
-	fmt.Println("filter", filter)
 	var findUser model.User
 	_ = handler.NewMgo(model.DB_NAME, model.C_NAME_USER).FindOne("id", details.User).Decode(&findUser)
 	if &findUser == nil {
 		return model.User{}, errors.New("用户未注册")
 	}
 	//用户添加钻石数量金币数量
-	fmt.Println("findUser.ContentMap", findUser.ContentMap, "11111", findUser.ContentMap == nil)
 	for _, content := range cdkeyModel.Contents {
 		if findUser.ContentMap == nil {
 			findUser.ContentMap = make(map[uint32]uint64)
@@ -88,20 +81,17 @@ func commonExchange(cdkeyModel *model.CdkeyModel, details *ExchangeDetails) (mod
 			findUser.ContentMap[uint32(model.DIAMOND)] += content.Count
 		}
 	}
-	fmt.Println("兑换后用户状态", findUser)
-	insertResult, err := handler.NewMgo(model.DB_NAME, model.C_NAME_USER).UpdateOne("id", details.User, "contentMap", findUser.ContentMap)
+	_, err := handler.NewMgo(model.DB_NAME, model.C_NAME_USER).UpdateOne("id", details.User, "contentMap", findUser.ContentMap)
 	if err != nil {
 		return model.User{}, err
 	}
-	fmt.Println("兑换结果", insertResult)
 	cdkeyModel.AlreadyExchangeNum += 1
 	cdkeyModel.ExchangeList = append(cdkeyModel.ExchangeList, model.Exchanger{User: details.User, ExchangeTime: details.ExchangeTime})
 	byteJson, err := json.Marshal(cdkeyModel)
 	if err != nil {
 		return model.User{}, err
 	}
-	result := global.GB_REDIS.Set(cdkeyModel.Cdkey, string(byteJson), -1)
-	fmt.Println("exchange result : =", result)
+	_ = global.GB_REDIS.Set(cdkeyModel.Cdkey, string(byteJson), -1)
 	return findUser, nil
 }
 func (s OnceStrategy) Exchange(cdkeyModel *model.CdkeyModel) (model.User, error) {

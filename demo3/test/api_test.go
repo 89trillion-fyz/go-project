@@ -3,16 +3,16 @@ package test
 import (
 	"bytes"
 	"fmt"
-	"go-project/demo3/controller"
-	model "go-project/demo3/proto"
 	"io/ioutil"
 	"net/http/httptest"
 	"runtime"
 	"testing"
 
-	"google.golang.org/protobuf/proto"
+	"go-project/demo3/controller"
+	model "go-project/demo3/proto"
 
 	"github.com/gin-gonic/gin"
+	"google.golang.org/protobuf/proto"
 )
 
 // Get 根据特定请求uri，发起get请求返回响应
@@ -89,7 +89,7 @@ func TestVerifyCdkey(t *testing.T) {
 }
 func TestVerifyCdkey2(t *testing.T) {
 	Router := controller.Routers()
-	result := Get("/cdkey/verifyCdkey?cdkey=VQ0DND3I&userId=08d4847c-42b7-46c5-b8b7-4333ad3cb410", Router)
+	result := Get("/cdkey/verifyCdkey?cdkey=VRM66R6O&userId=6776af39-8503-49bd-92c1-acc303e5fea7", Router)
 	fmt.Println(result)
 	g := model.GeneralReward{}
 	err := proto.Unmarshal(result, &g)
@@ -120,6 +120,6 @@ func TestRegester(t *testing.T) {
 
 func TestLogin(t *testing.T) {
 	Router := controller.Routers()
-	result := Post("/user/login", "{ \"id\":\"08d4847c-42b7-46c5-b8b7-4333ad3cb410\"}", Router)
+	result := Post("/user/login", "{ \"id\":\"6776af39-8503-49bd-92c1-acc303e5fea7\"}", Router)
 	fmt.Println("result =", string(result))
 }
