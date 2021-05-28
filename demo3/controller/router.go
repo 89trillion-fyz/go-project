@@ -1,7 +1,8 @@
-package router
+package controller
 
 import (
 	"fmt"
+	"time"
 
 	"go-project/demo3/global"
 	"go-project/demo3/initialize"
@@ -18,6 +19,7 @@ func init() {
 	}
 	fmt.Println("init global.GB_GONFIG", global.GB_GONFIG)
 	initialize.Redis()
+	initialize.ConnectToMongoDB(global.GB_GONFIG.Mongo.ApplyURI, time.Duration(global.GB_GONFIG.Mongo.Timeout), global.GB_GONFIG.Mongo.PoolSize)
 }
 func Routers() *gin.Engine {
 

@@ -1,4 +1,4 @@
-package api
+package service
 
 import (
 	"encoding/json"
@@ -8,10 +8,10 @@ import (
 	"regexp"
 	"time"
 
-	"go-project/demo3/core/strategy"
 	"go-project/demo3/global"
 	"go-project/demo3/model"
 	protoModel "go-project/demo3/proto"
+	"go-project/demo3/service/strategy"
 	"go-project/demo3/utils"
 
 	"github.com/gin-gonic/gin"

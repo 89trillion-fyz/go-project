@@ -3,8 +3,8 @@ package test
 import (
 	"bytes"
 	"fmt"
+	"go-project/demo3/controller"
 	model "go-project/demo3/proto"
-	"go-project/demo3/router"
 	"io/ioutil"
 	"net/http/httptest"
 	"runtime"
@@ -53,31 +53,31 @@ func Post(uri string, bodyJson string, router *gin.Engine) []byte {
 	return body
 }
 func TestCreateCdkey(t *testing.T) {
-	Router := router.Routers()
+	Router := controller.Routers()
 	result := Post("/cdkey/createCdkey", "{\"cdkeyType\":1,\"cdkeyUser\":\"admin\",\"createTime\":\"2021-05-26 15:00:00\",\"creator\":\"admin\",\"desc\":\"兑换吗\",\"contents\":[{\"content_type\":1,\"count\":10},{\"content_type\":2,\"count\":20}],\"expireTime\":\"2021-05-26 19:00:00\",\"totalExchangeNum\":10}", Router)
 	fmt.Println("result =", string(result))
 }
 
 //创建多次兑换
 func TestCreateCdkey2(t *testing.T) {
-	Router := router.Routers()
+	Router := controller.Routers()
 	result := Post("/cdkey/createCdkey", "{\"cdkeyType\":2,\"cdkeyUser\":\"admin\",\"createTime\":\"2021-05-26 15:00:00\",\"creator\":\"admin\",\"desc\":\"兑换吗\",\"contents\":[{\"content_type\":1,\"count\":10},{\"content_type\":2,\"count\":20}],\"expireTime\":\"2021-05-30 19:00:00\",\"totalExchangeNum\":3}", Router)
 	fmt.Println("result =", string(result))
 }
 
 //创建无限次兑换
 func TestCreateCdkey3(t *testing.T) {
-	Router := router.Routers()
+	Router := controller.Routers()
 	result := Post("/cdkey/createCdkey", "{\"cdkeyType\":3,\"cdkeyUser\":\"admin\",\"createTime\":\"2021-05-26 15:00:00\",\"creator\":\"admin\",\"desc\":\"兑换吗\",\"contents\":[{\"content_type\":1,\"count\":10},{\"content_type\":2,\"count\":20}],\"expireTime\":\"2021-05-30 19:00:00\",\"totalExchangeNum\":3}", Router)
 	fmt.Println("result =", string(result))
 }
 func TestGetCdkeyDetails(t *testing.T) {
-	Router := router.Routers()
+	Router := controller.Routers()
 	result := Get("/cdkey/getCdkeyDetails?cdkey=QEFI1VG8", Router)
 	fmt.Println("result =", string(result))
 }
 func TestVerifyCdkey(t *testing.T) {
-	Router := router.Routers()
+	Router := controller.Routers()
 	result := Get("/cdkey/verifyCdkey?cdkey=VQ0DND1I&userId=admin", Router)
 	fmt.Println("result ===", result)
 	g := model.GeneralReward{}
@@ -88,7 +88,7 @@ func TestVerifyCdkey(t *testing.T) {
 	fmt.Printf("result = %+v \n", &g)
 }
 func TestVerifyCdkey2(t *testing.T) {
-	Router := router.Routers()
+	Router := controller.Routers()
 	result := Get("/cdkey/verifyCdkey?cdkey=VQ0DND3I&userId=08d4847c-42b7-46c5-b8b7-4333ad3cb410", Router)
 	fmt.Println(result)
 	g := model.GeneralReward{}
@@ -99,7 +99,7 @@ func TestVerifyCdkey2(t *testing.T) {
 	fmt.Printf("result = %+v \n", &g)
 }
 func TestVerifyCdkey3(t *testing.T) {
-	Router := router.Routers()
+	Router := controller.Routers()
 	result := Get("/cdkey/verifyCdkey?cdkey=A8HQN2J0", Router)
 	for i := 0; i < 10; i++ {
 		result = Get("/cdkey/verifyCdkey?cdkey=A8HQN2J0", Router)
@@ -112,14 +112,14 @@ func TestVerifyCdkey3(t *testing.T) {
 }
 
 func TestRegester(t *testing.T) {
-	Router := router.Routers()
+	Router := controller.Routers()
 	result := Post("/user/registerUser", "{ \"id\":\"\"}", Router)
 	fmt.Println("result =", string(result))
 	runtime.GC()
 }
 
 func TestLogin(t *testing.T) {
-	Router := router.Routers()
+	Router := controller.Routers()
 	result := Post("/user/login", "{ \"id\":\"08d4847c-42b7-46c5-b8b7-4333ad3cb410\"}", Router)
 	fmt.Println("result =", string(result))
 }

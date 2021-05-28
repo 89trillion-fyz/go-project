@@ -1,14 +1,13 @@
 package strategy
 
 import (
-	"context"
 	"encoding/json"
 	"errors"
 	"fmt"
+	"go-project/demo3/handler"
 	"time"
 
 	"go-project/demo3/global"
-	"go-project/demo3/initialize"
 	"go-project/demo3/model"
 
 	"go.mongodb.org/mongo-driver/bson"
@@ -69,14 +68,10 @@ func NewAlwaysStrategy(details ExchangeDetails) AlwaysStrategy {
 }
 func commonExchange(cdkeyModel *model.CdkeyModel, details *ExchangeDetails) (model.User, error) {
 	fmt.Println("commonExchange details", details.User)
-	client, err := initialize.DbClient(model.DB_NAME)
-	if err != nil {
-		return model.User{}, err
-	}
 	filter := bson.D{{"id", details.User}}
 	fmt.Println("filter", filter)
 	var findUser model.User
-	_ = client.Collection(model.C_NAME_USER).FindOne(context.TODO(), filter).Decode(&findUser)
+	_ = handler.NewMgo(model.DB_NAME, model.C_NAME_USER).FindOne("id", details.User).Decode(&findUser)
 	if &findUser == nil {
 		return model.User{}, errors.New("用户未注册")
 	}
@@ -94,10 +89,7 @@ func commonExchange(cdkeyModel *model.CdkeyModel, details *ExchangeDetails) (mod
 		}
 	}
 	fmt.Println("兑换后用户状态", findUser)
-	insertResult, err := client.Collection(model.C_NAME_USER).UpdateOne(context.TODO(), bson.D{{"id", findUser.Id}},
-		bson.D{{"$set", bson.D{
-			{"contentMap", findUser.ContentMap},
-		}}})
+	insertResult, err := handler.NewMgo(model.DB_NAME, model.C_NAME_USER).UpdateOne("id", details.User, "contentMap", findUser.ContentMap)
 	if err != nil {
 		return model.User{}, err
 	}
