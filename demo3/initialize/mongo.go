@@ -3,8 +3,9 @@ package initialize
 import (
 	"context"
 	"fmt"
-	"go-project/demo3/global"
 	"time"
+
+	"go-project/demo3/global"
 
 	"go.mongodb.org/mongo-driver/mongo"
 	"go.mongodb.org/mongo-driver/mongo/options"

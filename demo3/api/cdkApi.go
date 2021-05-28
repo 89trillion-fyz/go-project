@@ -3,19 +3,19 @@ package api
 import (
 	"encoding/json"
 	"fmt"
-	"go-project/demo3/core/strategy"
-	"go-project/demo3/global"
-	"go-project/demo3/model"
-	protoModel "go-project/demo3/proto"
-	"go-project/demo3/utils"
 	"math/rand"
 	"net/http"
 	"regexp"
 	"time"
 
-	"google.golang.org/protobuf/proto"
+	"go-project/demo3/core/strategy"
+	"go-project/demo3/global"
+	"go-project/demo3/model"
+	protoModel "go-project/demo3/proto"
+	"go-project/demo3/utils"
 
 	"github.com/gin-gonic/gin"
+	"google.golang.org/protobuf/proto"
 )
 
 const letterBytes = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ"

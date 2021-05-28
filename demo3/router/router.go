@@ -2,12 +2,12 @@ package router
 
 import (
 	"fmt"
+
 	"go-project/demo3/global"
 	"go-project/demo3/initialize"
 
-	"gopkg.in/ini.v1"
-
 	"github.com/gin-gonic/gin"
+	"gopkg.in/ini.v1"
 )
 
 // 初始化总路由

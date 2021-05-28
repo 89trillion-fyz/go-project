@@ -1,8 +1,9 @@
 package global
 
 import (
-	"github.com/go-redis/redis"
 	"go-project/demo3/config"
+
+	"github.com/go-redis/redis"
 )
 
 var (

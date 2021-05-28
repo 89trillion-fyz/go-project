@@ -2,8 +2,10 @@ package initialize
 
 import (
 	"fmt"
-	"github.com/go-redis/redis"
+
 	"go-project/demo3/global"
+
+	"github.com/go-redis/redis"
 )
 
 func Redis() {

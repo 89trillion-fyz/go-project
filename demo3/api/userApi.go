@@ -3,16 +3,15 @@ package api
 import (
 	"context"
 	"fmt"
+	"reflect"
+
 	"go-project/demo3/initialize"
 	"go-project/demo3/model"
 	"go-project/demo3/utils"
-	"reflect"
-
-	"github.com/google/uuid"
-
-	"go.mongodb.org/mongo-driver/bson"
 
 	"github.com/gin-gonic/gin"
+	"github.com/google/uuid"
+	"go.mongodb.org/mongo-driver/bson"
 )
 
 func RegisterUser(c *gin.Context) {

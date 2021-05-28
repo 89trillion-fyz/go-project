@@ -7,6 +7,7 @@ import (
 	"go-project/demo3/router"
 	"io/ioutil"
 	"net/http/httptest"
+	"runtime"
 	"testing"
 
 	"google.golang.org/protobuf/proto"
@@ -114,6 +115,7 @@ func TestRegester(t *testing.T) {
 	Router := router.Routers()
 	result := Post("/user/registerUser", "{ \"id\":\"\"}", Router)
 	fmt.Println("result =", string(result))
+	runtime.GC()
 }
 
 func TestLogin(t *testing.T) {
