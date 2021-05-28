@@ -11,14 +11,53 @@ import (
 	"go-project/demo3/initialize"
 
 	"github.com/gin-gonic/gin"
+	"github.com/gin-gonic/gin/binding"
+	"github.com/go-playground/locales/en"
+	"github.com/go-playground/locales/zh"
+	ut "github.com/go-playground/universal-translator"
+	"github.com/go-playground/validator/v10"
+	enTranslations "github.com/go-playground/validator/v10/translations/en"
+	chTranslations "github.com/go-playground/validator/v10/translations/zh"
 	"go.uber.org/zap"
 	"gopkg.in/ini.v1"
 )
+
+// loca 通常取决于 http 请求头的 'Accept-Language'
+func transInit(local string) (err error) {
+	if v, ok := binding.Validator.Engine().(*validator.Validate); ok {
+		zhT := zh.New() //chinese
+		enT := en.New() //english
+		uni := ut.New(enT, zhT, enT)
+
+		var o bool
+		trans, o := uni.GetTranslator(local)
+		if !o {
+			return fmt.Errorf("uni.GetTranslator(%s) failed", local)
+		}
+		//register translate
+		// 注册翻译器
+		switch local {
+		case "en":
+			err = enTranslations.RegisterDefaultTranslations(v, trans)
+		case "zh":
+			err = chTranslations.RegisterDefaultTranslations(v, trans)
+		default:
+			err = enTranslations.RegisterDefaultTranslations(v, trans)
+		}
+		global.GB_TRANS = trans
+		return
+	}
+	return
+}
 
 // 初始化总路由
 func init() {
 	global.GB_GONFIG = new(config.Config)
 	initialize.Zap()
+	if err := transInit("zh"); err != nil {
+		global.GB_LOG.Error("transInit error", zap.Any("error", err))
+		return
+	}
 	err := ini.MapTo(&global.GB_GONFIG, "app.ini")
 	if err != nil {
 		path, _ := os.Getwd()

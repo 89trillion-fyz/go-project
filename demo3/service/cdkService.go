@@ -14,6 +14,7 @@ import (
 	"go-project/demo3/utils"
 
 	"github.com/gin-gonic/gin"
+	"github.com/go-playground/validator/v10"
 	"go.uber.org/zap"
 	"google.golang.org/protobuf/proto"
 )
@@ -39,7 +40,18 @@ func initCdkey() (string, error) {
 }
 func CreateCdkey(c *gin.Context) {
 	var cdkeyModel model.CdkeyModel
-	_ = c.ShouldBindJSON(&cdkeyModel)
+	if err := c.ShouldBindJSON(&cdkeyModel); err != nil {
+		// 获取validator.ValidationErrors类型的errors
+		errs, ok := err.(validator.ValidationErrors)
+		if !ok {
+			// 非validator.ValidationErrors类型错误直接返回
+			utils.FailWithMessage(err.Error(), c)
+			return
+		}
+		// validator.ValidationErrors类型错误则进行翻译
+		utils.FailWithDetailed(errs.Translate(global.GB_TRANS), "error", c)
+		return
+	}
 	cdkey, err := initCdkey()
 	if err != nil {
 		utils.FailWithMessage(err.Error(), c)
@@ -82,11 +94,13 @@ func GetCdkModel(cdkey string) (model.CdkeyModel, error) {
 func GetCdkeyDetails(c *gin.Context) {
 	cdkey := c.Query("cdkey")
 	if err := utils.VerfiyQuery(cdkey); err != nil {
+		global.GB_LOG.Error("GetCdkeyDetails error", zap.Any("err", err))
 		utils.FailWithMessage(err.Error(), c)
 		return
 	}
 	cdkeyModel, err := GetCdkModel(cdkey)
 	if err != nil {
+		global.GB_LOG.Error("GetCdkeyDetails error", zap.Any("err", err))
 		utils.FailWithMessage(err.Error(), c)
 		return
 	}

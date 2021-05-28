@@ -19,25 +19,25 @@ const (
 )
 
 type Content struct {
-	ContentType CONTENT_TYPE `json:"content_type" binding:"required"` //物品类型
-	Count       uint64       `json:"count" binding:"required"`        //数量
+	ContentType CONTENT_TYPE `json:"content_type" binding:"required,oneof=1 2"` //物品类型
+	Count       uint64       `json:"count"  binding:"required"`                 //数量
 }
 type Exchanger struct {
 	User         string    `json:"user" binding:"required"`
 	ExchangeTime LocalTime `json:"exchangeTime" binding:"required"`
 }
 type CdkeyModel struct {
-	CdkeyType          CDKEY_TYPE  `json:"cdkeyType" binding:"required"`
+	CdkeyType          CDKEY_TYPE  `json:"cdkeyType" binding:"oneof=1 2 3"`
 	CdkeyUser          string      `json:"cdkeyUser"`                      //指定用户一次性
 	Cdkey              string      `json:"cdkey"`                          //礼品码
 	CreateTime         LocalTime   `json:"createTime" binding:"required" ` //创建时间
 	Creator            string      `json:"creator" binding:"required"`     //创建人
 	Desc               string      `json:"desc" binding:"required"`        //礼品描述
-	Contents           []Content   `json:"contents" binding:"required" `
-	ExpireTime         LocalTime   `json:"expireTime" binding:"required"`       //有效期
-	TotalExchangeNum   int         `json:"totalExchangeNum" binding:"required"` //兑换次数
-	AlreadyExchangeNum int         `json:"alreadyExchangeNum"`                  //已经兑换次数
-	ExchangeList       []Exchanger `json:"exchangeList"`                        //领取列表
+	Contents           []Content   `json:"contents" binding:"required,dive,required"`
+	ExpireTime         LocalTime   `json:"expireTime" binding:"required"`             //有效期
+	TotalExchangeNum   int         `json:"totalExchangeNum" binding:"required,min=0"` //兑换次数
+	AlreadyExchangeNum int         `json:"alreadyExchangeNum"`                        //已经兑换次数
+	ExchangeList       []Exchanger `json:"exchangeList"`                              //领取列表
 
 }
 

@@ -1,6 +1,33 @@
 # go-project
 go语言项目
+## 目录结构
+```text
 
+.
+├── README.md 
+├── app.ini      (配置文件)
+├── config       (配置映射struct)   
+├── controller   (接入层)   
+├── global       (单例全局对象)  
+├── go.mod
+├── handler      (数据库处理)  
+├── initialize   (单例初始化)  
+├── log
+├── main.go      (入口)
+├── model        (模型)
+├── proto        (proto)
+├── service      (业务处理)
+├── test         (单元测试)
+└── utils        (工具)
+
+```
+## 设计方案
+### 创建礼品码/获取礼品码
+![image-20210528123913675](../img/image-20210528123718750.png)
+### 登陆注册
+![img1](../img/img1.png)
+### 验证礼品码
+![img](../img/img.png)
 # 接口文档
 
 ## 1）创建礼包码

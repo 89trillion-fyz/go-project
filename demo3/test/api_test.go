@@ -61,7 +61,7 @@ func TestCreateCdkey(t *testing.T) {
 //创建多次兑换
 func TestCreateCdkey2(t *testing.T) {
 	Router := controller.Routers()
-	result := Post("/cdkey/createCdkey", "{\"cdkeyType\":2,\"cdkeyUser\":\"admin\",\"createTime\":\"2021-05-26 15:00:00\",\"creator\":\"admin\",\"desc\":\"兑换吗\",\"contents\":[{\"content_type\":1,\"count\":10},{\"content_type\":2,\"count\":20}],\"expireTime\":\"2021-05-30 19:00:00\",\"totalExchangeNum\":3}", Router)
+	result := Post("/cdkey/createCdkey", "{\"cdkeyType\":1,\"cdkeyUser\":\"admin\",\"createTime\":\"2021-05-26 15:00:00\",\"creator\":\"admin\",\"desc\":\"兑换吗\",\"contents\":[{\"content_type\":1,\"count\":10},{\"content_type\":2,\"count\":11}],\"expireTime\":\"2021-05-30 19:00:00\",\"totalExchangeNum\":3}", Router)
 	fmt.Println("result =", string(result))
 }
 
