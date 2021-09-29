@@ -5,10 +5,11 @@ import (
 	response "demo1/utils"
 	"encoding/json"
 	"fmt"
-	"github.com/gin-gonic/gin"
 	"io/ioutil"
 	"net/http/httptest"
 	"testing"
+
+	"github.com/gin-gonic/gin"
 )
 
 func TestMain(m *testing.M) {
@@ -35,7 +36,7 @@ func Get(uri string, router *gin.Engine) []byte {
 	return body
 }
 func TestArmyFindByRarityAndLock(t *testing.T) {
-	//api.FindByRarityAndLock()
+	//controller.FindByRarityAndLock()
 	Router := router.Routers()
 	body := Get("/army/findByRarityAndLock?rarity=1&lock=0", Router)
 	fmt.Printf("response:%v\n", string(body))
@@ -46,7 +47,7 @@ func TestArmyFindByRarityAndLock(t *testing.T) {
 	}
 }
 func TestArmyFindRarityById(t *testing.T) {
-	//api.FindByRarityAndLock()
+	//controller.FindByRarityAndLock()
 	Router := router.Routers()
 	body := Get("/army/findRarityById?id=10101", Router)
 	fmt.Printf("response:%v\n", string(body))
