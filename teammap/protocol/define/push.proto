@@ -1,0 +1,13 @@
+syntax = "proto3";
+
+package push;
+option go_package = "protobuf/push";
+option csharp_namespace = "WsProto.Push";
+
+// 通用 推送消息类型
+message General {
+	uint32 subtype = 1; // 子类型：各事件单独定义
+	uint32 flag = 2;    // 标志位
+	repeated int32 values = 3; // 数据项：按顺序区分作用
+	string ext = 4; // 扩展字符串：请求ID等使用
+}

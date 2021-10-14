@@ -1,0 +1,41 @@
+syntax = "proto3";
+
+package grpcServer;
+option go_package = "./grpcservice";
+
+
+// The AccServer service definition.
+service AccServer {
+
+	// 向用户push消息: 被打、被踢下线
+	rpc PushMsg (SendMsgReq) returns (SendMsgRsp) {
+	}
+
+	// 获取在线用户数
+	rpc GetUserCount(GetUserCountReq) returns (GetUserCountRsp) {}
+}
+
+// 发送消息
+message SendMsgReq {
+	string userId = 1; // 用户ID
+	string event = 2; // 事件名
+	bool isLocal = 3; // 是否查询本机 acc内部调用为:true(本机查询不到即结束)
+	string data = 4;  // 消息内容
+}
+
+message SendMsgRsp {
+	uint32 retCode = 1;
+	string errMsg = 2;
+	string sendMsgId = 3;
+}
+
+// 获取在线用户数量
+message GetUserCountReq {
+	uint32 appId = 1;
+}
+
+message GetUserCountRsp {
+	uint32 retCode = 1;
+	string errMsg = 2;
+	uint32 count = 3;
+}

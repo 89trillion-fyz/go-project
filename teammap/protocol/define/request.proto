@@ -1,0 +1,24 @@
+syntax = "proto3";
+
+package request;
+option go_package = "protobuf/request";
+option csharp_namespace = "WsProto.Request";
+
+// 通用请求消息
+message General {
+	uint32 subtype = 1; // 子类型：各事件单独定义
+	uint32 flag = 2; // 标志位：状态互斥时使用顺序编号，状态组合时使用2进制每位表示一种状态
+	repeated int32 values = 3; // 数据项：按顺序区分作用
+	string ext = 4; // 扩展字符串：请求ID等使用
+	repeated LayVector vector = 5;//阵型操作向量组
+}
+
+// 阵型操作，移动一次对应一个此类型对象
+message LayVector{
+	uint32 layType = 1;//1为进攻2为防守
+	uint32 opType = 2;
+	uint32 oldId = 3;
+	int32 oldPos = 4;
+	uint32 newId = 5;
+	int32 newPos = 6;
+}

@@ -1,0 +1,294 @@
+syntax = "proto3";
+
+package response;
+option go_package = "protobuf/response";
+option csharp_namespace = "WsProto.Response";
+
+enum CounterType //枚举 计数器类型
+{
+	COUNTER_NONE = 0;    // proto3版本中，首成员必须为0，成员不应有相同的值
+	CURRENCY_COINS = 1;  // coin
+	CURRENCY_GEMS = 2;   // gem
+	CURRENCY_WOODS = 3;  // wood
+
+	TRAINCAMP_POINT = 4;    // 当前训练营阶段
+
+	PVP_TROPHY_MAX = 5;        // 奖杯之路最大
+	PVP_TROPHY_NOW = 6;        // 奖杯之路当前
+	PVP_MEDAL = 7;             // pvp奖杯数
+	PVP_RD_COUNT = 8;          // pvp 衰减次数
+	PVP_RD_TIME = 9;           // pvp 衰减结束时间
+	PVP_BASIC_COIN = 10;       // PVP奖励基础值
+	BP_ADVANCE_BOUGHT = 11;    // 当前赛季bp是否购买
+
+	SEASON_ID = 12;            // 赛季ID
+	SEASON_START_TM = 13;      // 赛季开启时间
+	SEASON_ATTACK_END_TM = 14; // 赛季战斗日结束时间
+	SEASON_END_TM = 15;        // 赛季结束时间
+
+	ISLAND_ID = 16;         // 岛ID
+	WEATHER_ID = 17;        // 天气ID
+	TIMESTAMP = 18;         // 时间戳
+
+	HUNT_LEVEL = 19;       // 赏金关卡序号
+	HUNT_LEVEL_ID = 20;    // 赏金关卡id
+	HUNT_ROUND = 21;       // 赏金轮数
+	REFRESH_TIME = 22;     // 刷新时间
+
+	IDLE_TS_COIN = 23;    // 离线收益COIN时间戳
+	IDLE_TS_GEM = 24;     // 离线收益GEM时间戳
+
+	POINT_RACE_RANK = 25;   // 积分赛排名
+	POINT_RACE_SCORE = 26;  // 积分赛积分
+	POINT_RACE_COUNT = 27;  // 积分赛次数
+
+	BOAT_UNLOCK = 28;    // 船只解锁状态
+
+	GROWTH_FOUND_COIN_BOUGHT = 29;   // 是否购买过金币成长基金
+	GROWTH_FOUND_GEM_BOUGHT = 30;    // 是否购买过钻石成长基金
+	MONTH_CARD_GEM = 31;    // 钻石周卡结束时间戳
+	WEEK_CARD_COIN = 32;    // 金币周卡结束时间戳
+	WEEK_CARD_WOOD = 33;    // 木头周卡结束时间戳
+	WEEK_CARD_TROOP = 34;   // 军队周卡结束时间戳
+
+	DRAWCARD_NEXT_PRICE = 35;    // 抽卡：下次价格
+	LUCKY_COUNT = 36;            // 抽卡幸运值
+	LUCKY_MULTIPLE = 37;         // 抽卡幸运倍率
+	GEM_DRAW_CARD_COUNT = 38;    // 钻石单次抽卡保底
+	GEM_DRAW_CARD_TOTAL = 39;    // 钻石抽卡触发保底值
+	UNLOCK_HIGH_DRAW_CARD = 40;  // 是否解锁战场高级抽卡
+
+	SPIN_DAY_CNT = 41;       // 转盘今日次数
+	SPIN_PERIOD_CNT = 42;    // 转盘阶段次数
+	SPIN_REWARD_CNT = 43;    // 转盘阶段奖励领取情况
+
+	FLOP_RESET_COUNT = 44;  // 翻牌重置次数
+	FLOP_CHANGE_CARD = 45;  // 翻牌主卡
+	FLOP_NEXT_PRICE = 46;   // 下一次翻卡消耗
+
+	TEAMWAR_TEAMSCORE = 47;     // 公会战公会积分
+	TEAMWAR_TEAMRANK = 48;      // 公会战公会排名
+	TEAM_WAR_COUNT = 49;        // 公会战攻击次数
+	TEAM_IDLE_TS = 50;        // 公会离线收益时间戳
+
+	RENAME_COUNT = 51;        // 改名次数
+	PVP_ENEMY_TROPHY = 52;     // pvp敌方获得杯数
+	TEAMWARV1_TEAMSCORE = 53;     // 公会战公会积分
+	TEAMWARV1_TEAMRANK = 54;      // 公会战公会排名
+	TEAMWARV1_COUNT = 55;        // 公会战攻击次数
+	TEAMWARV1_MATCH = 56;        // 公会战宣战公会ID
+	TEAMWARV1_OTEAMSCORE = 57;     // 公会战敌方公会积分
+	TEAMLEAGUE_TEAMSCORE = 58;     // 公会联赛公会积分
+	TEAMLEAGUE_TEAMRANK = 59;      // 公会联赛公会排名
+	TEAMLEAGUE_COUNT = 60;         // 公会联赛攻击次数
+	TEAMLEAGUE_DISABLE = 61;       // 公会联赛不能攻击
+	TEAMCHAMP_TEAMSCORE = 62;     // 公会巅峰赛公会积分
+	TEAMCHAMP_TEAMRANK = 63;      // 公会巅峰赛公会排名
+	TEAMCHAMP_COUNT = 64;         // 公会巅峰赛攻击次数
+	TEAMCHAMP_DISABLE = 65;       // 公会巅峰赛不能攻击
+	TEAMCHAMP_NOENTRY = 66;       // 公会巅峰赛未晋级
+	TEAMCHAMP_MATCH = 67;         // 公会巅峰赛宣战公会ID
+	TEAMCHAMP_OTEAMSCORE = 68;    // 公会巅峰赛宣战公会积分
+	USER_TEAM_ID = 69;                 // 公会ID
+	RECRUIT_HIGH_CNT = 70; //高级招募单抽累计次数
+	RECRUIT_LEGEND_CNT = 71; //传奇招募单抽累计次数
+
+	MORALE_CNT = 72; // 士气值
+	MORALE_CAP = 73; // 士气值容量
+	MORALE_TIME = 74; // 士气值恢复的时间戳
+	MORALE_EXPEND = 75; // 士气值消耗
+	WORKER_CNT = 76; //工人数量
+	WORKER_EXPIRE = 77; //工人过期时间
+	BUILD_UP_MIN_COST = 78; //工人不足时最低立即升级消耗
+	BUILD_UP_MIN_ID = 79; //工人不足时最低立即升级ID
+	WORKER_USE_CNT = 80; // 正在使用的工人数量
+
+	CURRENCY_TROOP_MEDAL = 81; // medal
+	BUILD_LACK_WOODS = 82; //建筑升级or新建所缺木材数
+	GEM_CONVERT_WOOD = 83; //钻石补足木材消耗
+	CHAMP_BONUS_CNT = 84; // 锦标赛奖励加成次数
+	CHAMP_NEXT_SEASON_RESET = 85; //锦标赛下次重置杯数
+	CHAMP_LAST_SEASON = 86; //锦标赛重置之前赛季
+	CHAMP_LAST_SEASON_SCORE = 87; //锦标赛重置之前杯数
+	CHAMP_EXTRA_COIN = 88;       // 锦标赛额外奖励金币
+	CHAMP_EXTRA_WOOD = 89;       // 锦标赛额外奖励木材
+	ARENA_STAGE = 90;            // PVP段位
+	LAST_STAGE = 91;            // 赛季重置前段位
+	DEFENSE_COMBATS = 92;         // 玩家防御战力
+
+	DESTROY_BATTLE_SCORE = 93;        // 摧毁战斗得分
+	TIME_BATTLE_SCORE = 94;            // 时间战斗得分
+	TROOP_KILL_BATTLE_SCORE = 95;    // 击杀战斗得分
+	TROOP_LOST_BATTLE_SCORE = 96;    // 战损战斗得分
+	COMBATS_BATTLE_SCORE = 97;        // 战力战斗得分
+	TOTAL_BATTLE_SCORE = 98;        // 总战斗得分
+	BATTLE_SCORE_LEVEL = 99;        // 战斗评级
+
+	INF_WAR_BATTLE_CNT = 102;              // 无尽试炼次数
+	INF_WAR_DAILY_MAX_DAMAGE = 103;        // 无尽试炼当日最高伤害
+	INF_WAR_SEASON_TOTAL_DAMAGE = 104;     // 无尽试炼赛季累计伤害
+	INF_WAR_STAGE_REWARD = 105;            // 无尽试炼阶段奖励
+	INF_WAR_ROOM_STAGE = 106;              // 无尽试炼房间等级
+	ARMY_HP_RATIO = 107;              // 士兵HP比例
+	CHAMPION_GIFT_PACK_STAGE = 108;  // 一条龙礼包状态(冠军礼包)
+	BP_MODEL_CNT = 109;                // battlePass奖章数
+	ADVANCE_BP_BOUGHT = 110;               // 当前赛季是否购买新版bp
+	BP_NORMAL_PROGRESS = 111;              // 新battlePass 普通 领取进度
+	BP_ADVANCE_PROGRESS = 112;              // 新battlePass 高级 领取进度
+	BP_DIFFICULTY_LEVEL = 113;              // 新battlePass 奖励等级
+	TASK_TOTAL_ACT = 114;              // 个人任务:任务总活跃度
+	TASK_STAGE = 115;                  // 个人任务:阶段
+	TASK_BOX_CLAIM_CNT = 116;          // 个人任务:宝箱领取数量
+	VIP_EXPIRE_TS = 117 ;                // vip过期时间
+	VIP_AUTO_BATTLE_CNT = 118 ;            // vip自动战斗次数
+	VIP_DAILY_RWD_CLAIM = 119 ;            // vip每日奖励领取
+	VIP_EXPIRE_MAIL_SENT = 120;            //vip过期邮件发送状态
+	TEAM_EXP = 121;// 当前经验值
+	TEAM_LV = 122;// 当前公会等级
+	TEAM_TASK_BOX_CLAIM_CNT = 123;// 公会任务已领取宝箱
+	TEAM_CUR_LV_EXP = 124;    //公会当前等级经验
+	TEAM_NEXT_LV_EXP = 125;    //公会下一等级所需经验
+	TEAM_NEXT_TASK = 126; //公会任务下一个任务Id
+	TEAM_NEXT_TASK_PG = 127; //公会任务下一个任务进度（主要是赛季任务进度）
+
+	PVE_CURRENT_LEVEL_STAR = 128;    // pve当前关卡星数
+	PVE_NOW_CHAPTER_STAR  = 130;    // pve当前章节星星
+	PVE_NOW_CHAPTER_ID = 132; //pve中的当前章节ID
+	PVE_NEXT_LEVEL_ID = 133;    // pve下一关ID
+
+	CHAMP_NEXT_SEASON_STAGE = 134;    // 下赛季段位
+	CHAMP_MAX_STAGE = 135;    // 历史最高段位
+
+	LUCKY_MAX = 136;         // 抽卡幸运最大值
+
+	PVE_CHAPTER_RWD  = 137;    //当前章节奖励领取进度
+	PVE_TARGET_REWARD_LOCK = 138;    //玩家当日通过章节数
+	PVE_DAILY_COIN_LIMIT_REACHED_TAG = 139;    //玩家当日金币奖励是否达到上限标识,0-未达到，1-达到
+	PVE_DAILY_WOOD_LIMIT_REACHED_TAG = 140;    //玩家当日木材奖励是否达到上限标识,0-未达到，1-达到
+
+	PVP_LAST_ARENA_COUNT = 142; //pvp今日战斗次数
+	INF_WAR_IS_NEXT_DAY = 147;      //无尽试炼是否跨天
+	PVE_NOW_DIFF   = 148;         //pve当前选择难度
+}
+
+enum StateType //枚举 状态类型
+{
+	STATE_NONE = 0; // proto3版本中，首成员必须为0，成员不应有相同的值
+	PVP_BP_NORMAL_CLAIM = 1;      // battle pass 普通 领取和状态
+	PVP_BP_ADVANCE_CLAIM = 2;     // battle pass 高级 领取状态
+	PVP_TROPHY_ROAD_CLAIM = 3;    // 奖杯之路 领取状态
+	USER_SIMPLE_GUIDE_STATE = 4;  // 引导状态、改名状态、兵营解锁等
+
+	LAY_DEF_STATE = 5;
+	LAY_ATK_STATE = 6;
+	LAY_WALL_STATE = 7;
+	ALL_ARMY_STATE = 8;
+	BD_LEVEL_STATE = 9;
+	BD_TIME_STATE = 10;
+
+	ELITE_POINTRACE = 11;
+	MASTER_POINTRACE = 12;
+
+	ATTACK_REWARD = 13;
+	LUCKY_DRAW_CARD = 14;     // 幸运抽卡价钱
+	LUCKY_DRAW_CARD_CNT = 15; // 幸运抽卡数量
+
+	FLOP_OPEN_RESULT = 16;   // 翻牌翻卡结果
+
+	SHOP_MONTH_CARD = 17;    // 周卡月卡今日领取状态
+	GROWTH_FOUND_STATE = 18; // 两种种成长基金领取状态
+
+	FUSE_WISH_LIST = 19;     // 熔炉许愿池
+
+	HERO_LV_STATE = 20;  //英雄等级和星级
+	HERO_SKILL_STATE = 21; //	英雄技能
+	HERO_LAY_STATE = 22; //	英雄防守阵型
+	//20-25为英雄相关预留
+	BAG_TOOL_STATE = 26;    //背包里的道具
+	HERO_SCRAP_STATE = 27;  //英雄碎片
+	CHAMP_ROAD_CLAIM = 30;  // 锦标赛奖杯之路领取状态
+	WORKER_INFO = 31;  // 工人信息
+	DAILY_TASK_PROGRESS = 32; // 个人任务:任务进度
+	DAILY_TASK_CLAIM_STATE = 33; // 个人任务:是否领取过奖励
+	TEAM_TASK_PROGRESS = 34; // 公会任务:任务进度
+	TEAM_TASK_CLAIM_STATE = 35; // 公会任务:是否领取过奖励
+	PVE_CHECKPOINT_STATE = 36; //pve中当前章节每个关卡的完成状况
+	PVE_CHECKPOINT_INDEX = 37;
+	PVE_CHECKPOINT_USERID = 38;
+	PVE_CHECKPOINT_ISLAND = 39;
+	PVE_CHECKPOINT_CBT = 40 ;
+	PVE_CHECKPOINT_LAYOUT = 41;
+	PVE_CHECKPOINT_WALL = 42;
+	PVE_CHECKPOINT_BDLV = 43;
+	PVE_CHECKPOINT_REWARD = 44;
+}
+
+// 通用的响应结构，状态码和状态信息
+message General {
+	int32 code = 1;
+	string msg = 2;
+}
+
+// 通用奖励消息
+message GeneralReward {
+	int32 code = 1;
+	string msg = 2;
+	repeated  PerChange changes = 3;// 客户端展示奖励的部分，严格按顺序展示 :每个结构体是道具ID -> 道具数量
+	map<uint32, uint64> balance = 4; // 道具有变化部分的当前余额 :  道具ID -> 道具数量
+	map<uint32, uint64> counter = 5; // 计数器当前值 : counterType -> 计数
+	string ext = 6; // 扩展字段，IAP使用
+}
+
+// 通用状态消息
+message GeneralState {
+	int32 code = 1;
+	string msg = 2;
+	map<uint32, uint64> counter = 3; // 计数器当前值：counterType -> 计数
+	repeated StateDetail state = 4; // 当前状态：宝箱奖励、战令奖励等
+	string ext = 5; // 扩展字符串，请求ID等
+}
+message PerChange {
+	uint32 joinId = 1;             //获得的物品id，eg：1010102 1级士兵
+	int32 amount = 2;            //获得的物品数量
+}
+
+// 通用阵型消息消息
+message GeneralLayout {
+	int32 code = 1;
+	string msg = 2;
+
+	BdInformation bdInf = 8;
+	SyncPos changedPos = 9;
+	repeated uint32 ext = 10;
+
+	map<uint32, uint64> balance = 11; // 道具有变化部分的当前余额 :  道具ID -> 道具数量
+	HeroInformation heroInf = 12;
+	map<uint32, uint64> counter = 13; // worker数量、消耗钻石、army camp升级重置士气值
+	repeated StateDetail state = 14;  // 当前状态
+}
+
+message BdInformation{//一个建筑的信息
+	uint32 bdid = 1;
+	uint32 bdLv = 2;
+	uint32 bdEndT = 3;
+}
+
+message HeroInformation{//一个英雄的信息
+	uint32 name = 1;
+	uint32 star = 2;
+	uint32 level = 3;
+	uint32 skill = 4;
+}
+
+
+
+message SyncPos{
+	uint32 syncType = 1;//改变的阵型
+	map<int32, uint32> newPos = 2;//pos->id
+}
+
+// 状态详情，子表
+message StateDetail {
+	StateType type = 1 ; // 类型 : 转盘额外奖励、pvp 战令 等
+	map<int32, uint32> state = 2; // 状态内容： id -> state，例如 转盘额外宝箱 5 -> 1 (claimed), 25 -> 0 (未claim)
+}

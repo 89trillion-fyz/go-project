@@ -1,0 +1,290 @@
+{
+	"7": {
+		"lucky_spin_conf": {
+			"main_hero_id": 16001,
+			"price_1": 160,
+			"price_5": 720,
+			"max_spin_per_day": 200,
+			"items": [
+				{
+					"rate": 1000,
+					"reward": {
+						"reward_type": 5,
+						"id": 16001,
+						"reward_count": 1
+					}
+				},
+				{
+					"rate": 250,
+					"reward": {
+						"reward_type": 5,
+						"id": 16001,
+						"reward_count": 3
+					}
+				},
+				{
+					"rate": 750,
+					"reward": {
+						"reward_type": 5,
+						"id": 11001,
+						"reward_count": 1
+					}
+				},
+				{
+					"rate": 750,
+					"reward": {
+						"reward_type": 5,
+						"id": 13201,
+						"reward_count": 1
+					}
+				},
+				{
+					"rate": 1000,
+					"reward": {
+						"reward_type": 5,
+						"id": 14501,
+						"reward_count": 1
+					}
+				},
+				{
+					"rate": 1000,
+					"reward": {
+						"reward_type": 5,
+						"id": 10601,
+						"reward_count": 1
+					}
+				},
+				{
+					"rate": 1000,
+					"reward": {
+						"reward_type": 5,
+						"id": 13301,
+						"reward_count": 1
+					}
+				},
+				{
+					"rate": 1000,
+					"reward": {
+						"reward_type": 15,
+						"id": 0,
+						"reward_count": 3000
+					}
+				},
+				{
+					"rate": 500,
+					"reward": {
+						"reward_type": 15,
+						"id": 0,
+						"reward_count": 10000
+					}
+				},
+				{
+					"rate": 1000,
+					"reward": {
+						"reward_type": 2,
+						"id": 0,
+						"reward_count": 80
+					}
+				},
+				{
+					"rate": 1500,
+					"reward": {
+						"reward_type": 1,
+						"id": 0,
+						"reward_count": 8000
+					}
+				},
+				{
+					"rate": 250,
+					"reward": {
+						"reward_type": 1,
+						"id": 0,
+						"reward_count": 20000
+					}
+				}
+			]
+		},
+		"lucky_spin_box_rewards": [
+			{
+				"exp": 10,
+				"reward": {
+					"reward_type": 2,
+					"id": 0,
+					"reward_count": 300
+				}
+			},
+			{
+				"exp": 25,
+				"reward": {
+					"reward_type": 5,
+					"id": 13201,
+					"reward_count": 6
+				}
+			},
+			{
+				"exp": 50,
+				"reward": {
+					"reward_type": 5,
+					"id": 16001,
+					"reward_count": 2
+				}
+			},
+			{
+				"exp": 100,
+				"reward": {
+					"reward_type": 1,
+					"id": 0,
+					"reward_count": 200000
+				}
+			},
+			{
+				"exp": 200,
+				"reward": {
+					"reward_type": 5,
+					"id": 16001,
+					"reward_count": 8
+				}
+			}
+		]
+	},
+	"activity_lists": [
+		{
+			"id": 7,
+			"type": 4,
+			"start": 1609732801,
+			"end": 1610337600
+		},
+		{
+			"id": 6,
+			"type": 5,
+			"start": 1609128001,
+			"end": 1609732800
+		}
+	],
+	"6": {
+		"flop_conf": {
+			"price": 400,
+			"reset_limit": 15,
+			"pattern_items": {
+				"1": {
+					"rate": 50,
+					"reward": {
+						"reward_type": 4,
+						"id": -1,
+						"reward_count": 1
+					}
+				},
+				"2": {
+					"rate": 75,
+					"reward": {
+						"reward_type": 5,
+						"id": -1,
+						"reward_count": 1
+					}
+				},
+				"3": {
+					"rate": 75,
+					"reward": {
+						"reward_type": 5,
+						"id": -1,
+						"reward_count": 1
+					}
+				},
+				"4": {
+					"rate": 150,
+					"reward": {
+						"reward_type": 5,
+						"id": -1,
+						"reward_count": 1
+					}
+				},
+				"5": {
+					"rate": 125,
+					"reward": {
+						"reward_type": 1,
+						"id": 0,
+						"reward_count": 50000
+					}
+				},
+				"6": {
+					"rate": 75,
+					"reward": {
+						"reward_type": 1,
+						"id": 0,
+						"reward_count": 100000
+					}
+				},
+				"7": {
+					"rate": 200,
+					"reward": {
+						"reward_type": 2,
+						"id": 0,
+						"reward_count": 200
+					}
+				},
+				"8": {
+					"rate": 175,
+					"reward": {
+						"reward_type": 15,
+						"id": 0,
+						"reward_count": 5000
+					}
+				},
+				"9": {
+					"rate": 75,
+					"reward": {
+						"reward_type": 15,
+						"id": 0,
+						"reward_count": 10000
+					}
+				}
+			}
+		},
+		"flop_hero_conf": {
+			"16001": [
+				{
+					"reward_type": 5,
+					"id": 16001,
+					"reward_count": 2
+				},
+				{
+					"reward_type": 5,
+					"id": 16801,
+					"reward_count": 4
+				},
+				{
+					"reward_type": 5,
+					"id": 11201,
+					"reward_count": 4
+				},
+				{
+					"reward_type": 5,
+					"id": 10501,
+					"reward_count": 6
+				}
+			],
+			"16301": [
+				{
+					"reward_type": 5,
+					"id": 16301,
+					"reward_count": 2
+				},
+				{
+					"reward_type": 5,
+					"id": 15901,
+					"reward_count": 4
+				},
+				{
+					"reward_type": 5,
+					"id": 11201,
+					"reward_count": 4
+				},
+				{
+					"reward_type": 5,
+					"id": 13301,
+					"reward_count": 6
+				}
+			]
+		}
+	}
+}
